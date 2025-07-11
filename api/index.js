@@ -52,10 +52,17 @@ app.get('/', (req, res) => {
 let isConnected = false;
 const connectMongo = async () => {
   if (!isConnected) {
-    await mongoose.connect(process.env.MONGO_URI);
-    isConnected = true;
+    try {
+      await mongoose.connect(process.env.MONGO_URI);
+      console.log("✅ MongoDB connected!");
+      isConnected = true;
+    } catch (err) {
+      console.error("❌ MongoDB connection error:", err.message);
+      throw err; // Crash the app to surface the error
+    }
   }
 };
+
 connectMongo();
 
 
@@ -78,5 +85,13 @@ app.get('/test', async (req, res) => {
     });
   }
 });
+
+if (process.env.NODE_ENV !== 'production') {
+  const PORT = 5000;
+  app.listen(PORT, () => {
+    console.log(`🚀 Local server running: http://localhost:${PORT}`);
+  });
+}
+
 
 module.exports = serverless(app);
