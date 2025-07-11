@@ -5,15 +5,16 @@ const cors = require('cors');
 const app = express();
 
 // CORS FIRST!
-app.use(cors({
-  origin: [
-    'https://salmon-crab-444533.hostingersite.com',
-    process.env.FRONTEND_URL || 'http://localhost:3000'
-  ],
+const corsOptions = {
+  origin: 'https://salmon-crab-444533.hostingersite.com',
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
-}));
+};
+
+app.use((req, res, next) => {
+  cors(corsOptions)(req, res, next);
+});
 // Preflight handler for all routes
 app.options('*', cors());
 

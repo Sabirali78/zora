@@ -60,6 +60,8 @@ app.use(async (req, res, next) => {
 });
 
 // Register only the articles routes at root
-app.use('/', require('../routes/articles'));
+router.get('/', async (req, res) => {
+  // Handles GET /api/articles
+});
 
 module.exports = serverless(app);
