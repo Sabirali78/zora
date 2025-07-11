@@ -45,7 +45,7 @@ connectMongo();
 
 // ✅ REMOVE `/api` prefix here to avoid double `/api/api`
 app.use('/auth', require('../routes/auth'));
-app.use('/articles', require('../routes/articles'));
+app.use('/api/articles', require('../routes/articles'));
 
 app.get('/test', async (req, res) => {
   try {
