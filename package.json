@@ -1,0 +1,30 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+ "main": "api/index.js",
+  "scripts": {
+     "start": "vercel dev",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-indexes": "node scripts/buildIndexes.js",
+    "test-search": "node scripts/testSearch.js",
+    "test-enhanced-search": "node scripts/testEnhancedSearch.js"
+  },
+  "keywords": [],
+  "proxy": "http://localhost:5000",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cloudinary": "^2.7.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^4.18.2",
+    "express-fileupload": "^1.5.1",
+    "express-validator": "^7.2.1",
+    "fuse.js": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.16.0",
+    "serverless-http": "^3.2.0"
+  },
+  "description": ""
+}
