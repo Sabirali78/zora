@@ -6,7 +6,10 @@ const app = express();
 
 // CORS FIRST!
 const corsOptions = {
-  origin: 'https://salmon-crab-444533.hostingersite.com',
+  origin: [
+    'https://salmon-crab-444533.hostingersite.com', // your frontend
+    'http://localhost:3000' // local dev, if needed
+  ],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
