@@ -28,10 +28,25 @@ app.use(cors({
     'https://salmon-crab-444533.hostingersite.com',
     process.env.FRONTEND_URL || 'http://localhost:3000'
   ],
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
 }));
+
+// Add the root endpoint handler here ▼
+app.get('/', (req, res) => {
+  res.json({
+    status: 'API is working',
+    message: 'Welcome to ZORA backend!',
+    endpoints: {
+      articles: '/api/articles',
+      auth: '/api/auth',
+      test: '/test'
+    }
+  });
+});
+
+
 
 // MongoDB Connection (Prevent Reconnect)
 let isConnected = false;
