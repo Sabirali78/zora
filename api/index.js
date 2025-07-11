@@ -30,7 +30,7 @@ app.use(cors({
   credentials: true
 }));
 
-// MongoDB Connection (Avoid Reconnecting on Every Request)
+// MongoDB Connection (Prevent Reconnect)
 let isConnected = false;
 const connectMongo = async () => {
   if (!isConnected) {
@@ -40,20 +40,23 @@ const connectMongo = async () => {
 };
 connectMongo();
 
-// Routes
-app.use('/api/auth', require('../routes/auth'));
-app.use('/api/articles', require('../routes/articles'));
+// ✅ REMOVE `/api` prefix here to avoid double `/api/api`
+app.use('/auth', require('../routes/auth'));
+app.use('/articles', require('../routes/articles'));
 
-app.get('/api/test', async (req, res) => {
+app.get('/test', async (req, res) => {
   try {
     await cloudinary.api.ping();
-    res.json({ 
+    res.json({
       message: 'Backend is working!',
       cloudinary: 'Connected',
       database: 'Connected'
     });
   } catch (err) {
-    res.status(500).json({ message: 'Backend error', cloudinary: err.message });
+    res.status(500).json({
+      message: 'Backend error',
+      cloudinary: err.message
+    });
   }
 });
 
