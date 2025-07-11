@@ -5,21 +5,30 @@ const cors = require('cors');
 const app = express();
 
 // CORS FIRST!
+const allowedOrigins = [
+  'https://salmon-crab-444533.hostingersite.com', // your frontend
+  'http://localhost:3000' // local dev
+];
 const corsOptions = {
-  origin: [
-    'https://salmon-crab-444533.hostingersite.com', // your frontend
-    'http://localhost:3000' // local dev, if needed
-  ],
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps, curl, etc.)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      return callback(new Error('Not allowed by CORS'));
+    }
+  },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
 };
 
-app.use((req, res, next) => {
-  cors(corsOptions)(req, res, next);
-});
-// Preflight handler for all routes
-app.options('*', cors());
+// Use cors middleware globally
+app.use(cors(corsOptions));
+
+// Explicit preflight handler for all routes
+app.options('*', cors(corsOptions));
 
 const mongoose = require('mongoose');
 const fileUpload = require('express-fileupload');
