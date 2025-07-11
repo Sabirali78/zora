@@ -43,8 +43,9 @@ const connectMongo = async () => {
 };
 connectMongo();
 
-// ✅ REMOVE `/api` prefix here to avoid double `/api/api`
-app.use('/auth', require('../routes/auth'));
+
+// Register API routes with /api prefix for Vercel serverless routing
+app.use('/api/auth', require('../routes/auth'));
 app.use('/api/articles', require('../routes/articles'));
 
 app.get('/test', async (req, res) => {
