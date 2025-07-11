@@ -26,11 +26,13 @@ app.use(fileUpload({
 app.use(cors({
   origin: [
     'https://salmon-crab-444533.hostingersite.com',
+    'https://zora-frontend.vercel.app', // Add other domains if needed
     process.env.FRONTEND_URL || 'http://localhost:3000'
   ],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true
+  credentials: true,
+  exposedHeaders: ['Content-Length', 'Authorization']
 }));
 
 // Add the root endpoint handler here ▼
