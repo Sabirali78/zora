@@ -1,13 +1,28 @@
+
 const serverless = require('serverless-http');
 const express = require('express');
-const mongoose = require('mongoose');
 const cors = require('cors');
+const app = express();
+
+// CORS FIRST!
+app.use(cors({
+  origin: [
+    'https://salmon-crab-444533.hostingersite.com',
+    process.env.FRONTEND_URL || 'http://localhost:3000'
+  ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
+}));
+// Preflight handler for all routes
+app.options('*', cors());
+
+const mongoose = require('mongoose');
 const fileUpload = require('express-fileupload');
 const cloudinary = require('cloudinary').v2;
-
 require('dotenv').config();
 
-const app = express();
+// ...existing code...
 
 // Cloudinary configuration
 cloudinary.config({
@@ -23,19 +38,6 @@ app.use(fileUpload({
   tempFileDir: '/tmp/'
 }));
 
-app.use(cors({
-  origin: [
-    'https://salmon-crab-444533.hostingersite.com',
-    'https://zora-frontend.vercel.app', // Add other domains if needed
-    process.env.FRONTEND_URL || 'http://localhost:3000'
-  ],
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true,
-  exposedHeaders: ['Content-Length', 'Authorization']
-}));
-
-app.options('*', cors());
 
 // Add the root endpoint handler here ▼
 app.get('/', (req, res) => {
