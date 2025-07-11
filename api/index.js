@@ -35,6 +35,8 @@ app.use(cors({
   exposedHeaders: ['Content-Length', 'Authorization']
 }));
 
+app.options('*', cors());
+
 // Add the root endpoint handler here ▼
 app.get('/', (req, res) => {
   res.json({
